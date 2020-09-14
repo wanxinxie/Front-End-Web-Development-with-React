@@ -1,7 +1,81 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
-import { Media } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
 
+
+class Dishdetail extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+        }
+    }
+
+    renderDish(dish) {
+        if (dish != null) {
+            return(
+              <div className="col-12 col-md-5 m-1">
+                  <Card>
+                      <CardImg width="100%" src={dish.image} alt={dish.name} />
+                      <CardBody>
+                          <CardTitle>{dish.name}</CardTitle>
+                          <CardText>{dish.description}</CardText>
+                      </CardBody>
+                  </Card>
+              </div>
+          )
+      }
+      else{
+        return(
+                <div></div>
+            )
+        }
+    }
+
+
+    renderComments(comments) {
+      if (comments != null) {
+        return (<div className="col-12 col-md-5 m-1">
+            <h4>Comments</h4>
+            {comments.map(comment => (
+              <ul key={comment.id} className="list-unstyled">
+                <li className="mb-2">{comment.comment}</li>
+                <li>
+                  -- {comment.author}{" "}
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit"
+                  }).format(new Date(Date.parse(comment.date)))}
+                </li>
+              </ul>
+            ))}
+          </div>
+        );
+      } else
+      { console.log('fail');
+        return <div />};
+    }
+
+render(){const {dish} = this.props;
+        console.log('render dish');
+
+        return dish?(
+            <div className="container">
+                <div className="row">
+                        {this.renderDish(dish)}
+                        {this.renderComments(dish.comments)}
+                </div>
+            </div>
+        ):(
+            <div></div>
+        )
+        console.log('render comment');
+    }
+}
+export default Dishdetail;
+
+
+
+{/*
 class DishetailComponent extends Component {
   renderComments(comments) {
     if (comments != null) {
@@ -16,6 +90,14 @@ class DishetailComponent extends Component {
         </ul>
       ));
     } else return <div />;
+  }
+
+  renderDish(dish) {
+
+     if (dish != null)
+       return <DishetailComponent dish={dish} />; // <Classname dishes={this.state.dishes} />
+       else return <div />;
+
   }
 
   render() {
@@ -40,4 +122,4 @@ class DishetailComponent extends Component {
 }
 }
 
-export default DishetailComponent;
+export default DishetailComponent;*/}
